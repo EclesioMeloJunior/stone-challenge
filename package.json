@@ -1,0 +1,23 @@
+{
+  "name": "stone-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EclesioMeloJunior/stone-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EclesioMeloJunior/stone-challenge/issues"
+  },
+  "homepage": "https://github.com/EclesioMeloJunior/stone-challenge#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
