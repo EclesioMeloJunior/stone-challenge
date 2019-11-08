@@ -12,12 +12,25 @@ class Database {
 				host: config.database.host,
 				port: config.database.port,
 				database: config.database.name,
-				password: config.database.password
+				password: config.database.password,
+				statement_timeout: 5000
 			});
 
-			await client.connect();
-			this.db = client;
+			try {
+				await client.connect();
+				this.db = client;
+			} catch (exception) {
+				console.log(
+					`[${new Date()}][DB] problems when try to connect\n[${new Date()}][DB] Exception: ${
+						exception.message
+					}`
+				);
+
+				return null;
+			}
 		}
+
+		return this;
 	}
 }
 

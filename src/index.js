@@ -5,15 +5,15 @@ const database = require("./database");
 const app = express();
 
 const startDatabase = async config => {
-	return await database.connect(config);
+	await database.connect(config);
 };
 
-const startServer = (app, database, config) => {
+const startServer = (app, config) => {
 	app.listen(config.port, () => {
 		console.log(`Application started at ${config.port}`);
 	});
 };
 
 startDatabase(config)
-	.then(databaseConnection => startServer(app, databaseConnection, config))
+	.then(() => startServer(app, config))
 	.catch(() => console.log(`[${new Date()}][APP] app startup FAIL`));
