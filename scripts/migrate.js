@@ -31,7 +31,7 @@ const executeMigrations = async () => {
 			console.log(`[${new Date()}][MIGRATIONS] EXECUTED: ${migrationFileName}`);
 		} catch (exception) {
 			console.log(
-				`[${new Date()}][MIGRATIONS] FAIL: ${migrationFileName} \nException: ${
+				`[${new Date()}][MIGRATIONS] FAIL: ${migrationFileName}\n[${new Date()}][MIGRATIONS] Exception: ${
 					exception.message
 				}`
 			);
