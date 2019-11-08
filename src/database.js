@@ -11,7 +11,7 @@ class Database {
 				user: config.database.user,
 				host: config.database.host,
 				port: config.database.port,
-				database: config.database.database,
+				database: config.database.name,
 				password: config.database.password
 			});
 
