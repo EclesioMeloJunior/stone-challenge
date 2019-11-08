@@ -15,8 +15,12 @@ class Database {
 				password: config.database.password
 			});
 
-			await client.connect();
-			this.db = client;
+			try {
+				await client.connect();
+				this.db = client;
+			} catch (exception) {
+				console.log(exception);
+			}
 		}
 
 		return this;
