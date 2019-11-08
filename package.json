@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "migrate": "node scripts/migrate.js",
-    "start:dev": "nodemon src/index.js"
+    "start:dev": "set NODE_ENV=development && nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
