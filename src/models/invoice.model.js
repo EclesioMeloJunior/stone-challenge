@@ -12,7 +12,13 @@ function buildInvoiceModel() {
 	} = {}) {
 		const invoiceObject = {
 			getId: () => id,
-			getReferenceMonth: () => referenceMonth,
+			getReferenceMonth: () => {
+				if (referenceMonth < 1 || referenceMonth > 12) {
+					throw new Error("Reference month is out of the range");
+				}
+
+				return referenceMonth;
+			},
 			getReferenceYear: () => referenceYear,
 			getDocument: () => document,
 			getDescription: () => description,
@@ -32,3 +38,5 @@ function buildInvoiceModel() {
 		return Object.freeze(invoiceObject);
 	};
 }
+
+module.exports = buildInvoiceModel;
