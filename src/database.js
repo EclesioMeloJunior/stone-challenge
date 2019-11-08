@@ -18,6 +18,8 @@ class Database {
 			await client.connect();
 			this.db = client;
 		}
+
+		return this;
 	}
 }
 
