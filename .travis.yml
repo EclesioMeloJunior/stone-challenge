@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 10
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: app-stone-challenge
+  on: master
+  run:
+    - "npm run migrate"
