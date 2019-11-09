@@ -1,6 +1,6 @@
 const database = require("../database");
 
-return function invoiceRepository() {
+function invoiceRepository() {
 	const add = async invoice => {
 		const query = /*sql*/ `
       INSERT INTO 
@@ -24,4 +24,6 @@ return function invoiceRepository() {
 	};
 
 	return Object.freeze({ add });
-};
+}
+
+module.exports = invoiceRepository;
