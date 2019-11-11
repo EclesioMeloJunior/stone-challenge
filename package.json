@@ -7,7 +7,7 @@
     "test": "jest -c jest.config.js",
     "test:integration": "jest -c jest.integration.config.js",
     "migrate": "node scripts/migrate.js",
-    "start:dev": "export NODE_ENV=development && nodemon index.js",
+    "start:dev": "set NODE_ENV=development && nodemon index.js",
     "start": "node index.js"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "pg": "^7.12.1"
   }
 }

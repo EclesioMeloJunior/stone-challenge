@@ -8,6 +8,7 @@ function invoiceRepository() {
         ("referenceMonth", "referenceYear", "document", "amount", "isActive", "createdAt", "deactivatedAt")
       VALUES  
         ($1, $2, $3, $4, $5, $6, $7)
+			RETURNING *
     `;
 
 		const replacements = [
@@ -20,7 +21,8 @@ function invoiceRepository() {
 			invoice.getDeactivatedAt()
 		];
 
-		await database.db.query(query, replacements);
+		const newInvoice = await database.db.query(query, replacements);
+		return newInvoice.rows.length > 0 ? newInvoice.rows[0] : null;
 	};
 
 	return Object.freeze({ add });

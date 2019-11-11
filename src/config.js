@@ -1,6 +1,10 @@
-const environment = process.env.NODE_ENV.trim();
+const environment = process.env.NODE_ENV
+	? process.env.NODE_ENV.trim()
+	: "development";
 
-if (environment === "development") {
+console.log(environment);
+
+if (environment !== "production") {
 	const dotenv = require("dotenv");
 	dotenv.config();
 }

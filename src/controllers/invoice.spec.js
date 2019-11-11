@@ -1,8 +1,14 @@
 const app = require("../server");
 const supertest = require("supertest");
-const request = supertest(app);
+const config = require("../config");
+const database = require("../database");
 
+const request = supertest(app);
 const ENDPOINT = "/api/v1/invoices";
+
+beforeAll(async () => {
+	await database.connect(config);
+});
 
 describe("[GET] /api/v1/invoices", () => {
 	describe("When request without filters", () => {
@@ -33,6 +39,7 @@ describe("[POST] /api/v1/invoices", () => {
 
 		test("should return code 201 (Created)", async () => {
 			const response = await request.post(ENDPOINT).send(fakerInvoice);
+
 			expect(response.statusCode).toBe(201);
 		});
 
@@ -42,12 +49,12 @@ describe("[POST] /api/v1/invoices", () => {
 				.send({ ...fakerInvoice });
 
 			const expectedResponse = {
-				...postInvoiceResponse.body,
-				...fakerInvoice
+				...fakerInvoice,
+				...postInvoiceResponse.body.data
 			};
 
-			expect(postInvoiceResponse.body).toHaveProperty("id");
-			expect(postInvoiceResponse.body).toMatchObject(expectedResponse);
+			expect(postInvoiceResponse.body.data).toHaveProperty("id");
+			expect(postInvoiceResponse.body.data).toMatchObject(expectedResponse);
 		});
 	});
 });

@@ -19,14 +19,17 @@ const executeMigrations = async () => {
 
 	console.log(`[${new Date()}][MIGRATIONS] STARTING`);
 
-	await migrationsFilesName.forEach(async migrationFileName => {
+	for (let migrationFileName of migrationsFilesName) {
 		try {
 			console.log(
 				`[${new Date()}][MIGRATIONS] EXECUTING: ${migrationFileName}`
 			);
 
 			const migrationFile = path.resolve(migrationsPath, migrationFileName);
-			await require(migrationFile)(databaseConnection.db);
+
+			const migrationFunction = require(migrationFile);
+
+			await migrationFunction(databaseConnection.db);
 
 			console.log(`[${new Date()}][MIGRATIONS] EXECUTED: ${migrationFileName}`);
 		} catch (exception) {
@@ -38,7 +41,7 @@ const executeMigrations = async () => {
 
 			process.exit();
 		}
-	});
+	}
 
 	console.log(`[${new Date()}][MIGRATIONS] ENDING`);
 

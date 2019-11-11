@@ -12,17 +12,11 @@ module.exports = router => {
 		const schemaValidation = invoiceSchema.validate(invoiceDto);
 
 		if (schemaValidation.error) {
-			return response.status(400).json(schemaValidation.errors);
+			return response.status(400).json(schemaValidation.error);
 		}
 
-		try {
-			const addInvoiceResponse = await addInvoice(invoiceDto);
-			return response
-				.status(addInvoiceResponse.code)
-				.json(addInvoiceResponse.data);
-		} catch (exception) {
-			return response.status(500).json(exception);
-		}
+		const addInvoiceResponse = await addInvoice(invoiceDto);
+		return response.status(addInvoiceResponse.code).json(addInvoiceResponse);
 	});
 
 	return router;
