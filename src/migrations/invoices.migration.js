@@ -1,6 +1,6 @@
-const migrationQuery = `
+const migrationQuery = /* sql */ `
   CREATE TABLE IF NOT EXISTS public."Invoices" (
-    id int4 NOT NULL,
+    id serial,
     "referenceMonth" int4 NULL,
     "referenceYear" int4 NULL,
     "document" varchar(14) NULL,
@@ -13,6 +13,8 @@ const migrationQuery = `
   );
 `;
 
-module.exports = async database => {
+async function executeMigration(database) {
 	await database.query(migrationQuery);
-};
+}
+
+module.exports = executeMigration;

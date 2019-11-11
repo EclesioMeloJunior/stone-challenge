@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest -c jest.config.js",
+    "test:integration": "jest -c jest.integration.config.js",
     "migrate": "node scripts/migrate.js",
-    "start:dev": "set NODE_ENV=development && nodemon src/index.js",
-    "start": "node src/index.js"
+    "start:dev": "set NODE_ENV=development && nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -23,12 +24,15 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@hapi/joi": "^16.1.7",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "pg": "^7.12.1"
   }
 }

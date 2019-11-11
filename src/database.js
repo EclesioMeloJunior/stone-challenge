@@ -19,6 +19,7 @@ class Database {
 			try {
 				await client.connect();
 				this.db = client;
+				console.log(`[${new Date()}][DB] DATABASE CONNECTED`);
 			} catch (exception) {
 				console.log(
 					`[${new Date()}][DB] problems when try to connect\n[${new Date()}][DB] Exception: ${
@@ -26,7 +27,7 @@ class Database {
 					}`
 				);
 
-				return null;
+				throw exception;
 			}
 		}
 
