@@ -5,6 +5,13 @@ function buildUpdateInvoice(invoiceRepository) {
 		try {
 			let retrievedInvoice = await invoiceRepository.findById(invoiceId);
 
+			if (!retrievedInvoice) {
+				return {
+					code: 404,
+					message: "Invoice not found"
+				};
+			}
+
 			const retrivedInvoiceModel = invoiceModel(retrievedInvoice);
 
 			if (!retrivedInvoiceModel.getIsActive()) {
@@ -31,6 +38,7 @@ function buildUpdateInvoice(invoiceRepository) {
 				message: "Invoice not found"
 			};
 		} catch (exception) {
+			console.log(exception);
 			return {
 				code: 500,
 				message: exception.message

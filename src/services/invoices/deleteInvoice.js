@@ -4,6 +4,14 @@ function buildDeleteInvoice(invoiceRepository) {
 	return async function deleteInvoice(invoiceId) {
 		try {
 			const retrievedInvoice = await invoiceRepository.findById(invoiceId);
+
+			if (!retrievedInvoice) {
+				return {
+					code: 404,
+					message: "Invoice not found"
+				};
+			}
+
 			const invoice = invoiceModel(retrievedInvoice);
 
 			if (!invoice.getIsActive()) {
