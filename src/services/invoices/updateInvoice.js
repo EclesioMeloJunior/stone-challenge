@@ -2,14 +2,24 @@ const { invoiceModel } = require("../../models");
 
 function buildUpdateInvoice(invoiceRepository) {
 	return async function updateInvoice(invoiceId, invoiceDto) {
-		const invoice = invoiceModel(invoiceDto);
-
 		try {
-			const updatedInvoice = await invoiceRepository.update(invoiceId, invoice);
+			let retrievedInvoice = await invoiceRepository.findById(invoiceId);
 
-			if (updatedInvoice.rowCount > 0) {
-				const retrievedInvoice = invoiceRepository.findById(invoiceId);
+			const retrivedInvoiceModel = invoiceModel(retrievedInvoice);
 
+			if (!retrivedInvoiceModel.getIsActive()) {
+				return {
+					code: 404,
+					message: "Invoice not found"
+				};
+			}
+
+			const invoice = invoiceModel({ ...retrievedInvoice, ...invoiceDto });
+
+			const updatedInvoice = invoiceRepository.update(invoiceId, invoice);
+			retrievedInvoice = invoiceRepository.findById(invoiceId);
+
+			if ((await updatedInvoice).rowCount > 0) {
 				return {
 					code: 200,
 					data: await retrievedInvoice
@@ -18,12 +28,11 @@ function buildUpdateInvoice(invoiceRepository) {
 
 			return {
 				code: 404,
-				data: "Invoice not found"
+				message: "Invoice not found"
 			};
 		} catch (exception) {
-			console.log(exception);
 			return {
-				code: 200,
+				code: 500,
 				message: exception.message
 			};
 		}

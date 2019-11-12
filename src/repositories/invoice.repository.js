@@ -52,9 +52,10 @@ function invoiceRepository() {
         "document"=$3,
         "description"=$4,
         "amount"=$5,
-        "isActive"=$6
+        "isActive"=$6,
+        "deactivatedAt"=$7
       WHERE
-        public."Invoices".id = $7
+        public."Invoices".id = $8
     `;
 
 		const replacements = [
@@ -64,6 +65,7 @@ function invoiceRepository() {
 			invoice.getDescription(),
 			invoice.getAmount(),
 			invoice.getIsActive(),
+			invoice.getDeactivatedAt(),
 			invoiceId
 		];
 
