@@ -14,7 +14,7 @@ const migrationQuery = /* sql */ `
 `;
 
 async function executeMigration(database) {
-	await database.query(migrationQuery);
+  await database.query(migrationQuery);
 }
 
 module.exports = executeMigration;

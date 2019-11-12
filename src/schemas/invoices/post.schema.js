@@ -1,15 +1,13 @@
 const Joi = require("@hapi/joi");
 
-const invoiceSchema = Joi.object({
-	id: Joi.number(),
-
+const postInvoiceSchema = Joi.object({
 	referenceMonth: Joi.number()
 		.min(1)
 		.max(12)
 		.required(),
 
 	referenceYear: Joi.number()
-		.max(1900)
+		.min(1900)
 		.max(2100)
 		.required(),
 
@@ -22,4 +20,4 @@ const invoiceSchema = Joi.object({
 	isActive: Joi.boolean()
 });
 
-module.exports = invoiceSchema;
+module.exports = postInvoiceSchema;

@@ -7,14 +7,21 @@ class Database {
 
 	async connect(config) {
 		if (this.db === null) {
-			const client = new Client({
-				user: config.database.user,
-				host: config.database.host,
-				port: config.database.port,
-				database: config.database.name,
-				password: config.database.password,
-				statement_timeout: 5000
-			});
+			let client = null;
+			if (config.database.connectionString) {
+				client = new Client({
+					connectionString: config.database.connectionString
+				});
+			} else {
+				client = new Client({
+					user: config.database.user,
+					host: config.database.host,
+					port: config.database.port,
+					database: config.database.name,
+					password: config.database.password,
+					statement_timeout: 5000
+				});
+			}
 
 			try {
 				await client.connect();
