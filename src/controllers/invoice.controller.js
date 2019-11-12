@@ -1,5 +1,5 @@
-const { addInvoice } = require("../services/invoices");
-const invoiceSchema = require("../schemas/invoice.schema");
+const { addInvoice, updateInvoice } = require("../services/invoices");
+const { invoicePostSchema, invoicePutSchema } = require("../schemas/invoices");
 
 module.exports = router => {
 	router.get("/", (request, response) => {
@@ -9,7 +9,7 @@ module.exports = router => {
 	router.post("/", async (request, response) => {
 		const invoiceDto = request.body;
 
-		const schemaValidation = invoiceSchema.validate(invoiceDto);
+		const schemaValidation = invoicePostSchema.validate(invoiceDto);
 
 		if (schemaValidation.error) {
 			return response.status(400).json(schemaValidation.error);
@@ -18,6 +18,30 @@ module.exports = router => {
 		const addInvoiceResponse = await addInvoice(invoiceDto);
 		return response.status(addInvoiceResponse.code).json(addInvoiceResponse);
 	});
+
+	router.put("/:id", async (request, response) => {
+		const invoiceDto = request.body;
+		const invoiceId = request.params.id;
+
+		const schemaValidation = invoicePutSchema.validate(invoiceDto);
+
+		if (schemaValidation.error) {
+			return response.status(400).json(schemaValidation.error);
+		}
+
+		const updateInvoiceResponse = await updateInvoice(
+			invoiceId,
+			schemaValidation.value
+		);
+
+		return response
+			.status(updateInvoiceResponse.code)
+			.json(updateInvoiceResponse);
+	});
+
+	router.patch("/:id", async (request, response) => {});
+
+	router.delete("/:id", async (request, response) => {});
 
 	return router;
 };

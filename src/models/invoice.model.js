@@ -24,7 +24,7 @@ function buildInvoiceModel() {
 			getDescription: () => description,
 			getAmount: () => amount,
 			getIsActive: () => {
-				isActive && !deactivatedAt;
+				return isActive && !deactivatedAt;
 			},
 			getCreatedAt: () => createdAt,
 			getDeactivatedAt: () => deactivatedAt,
