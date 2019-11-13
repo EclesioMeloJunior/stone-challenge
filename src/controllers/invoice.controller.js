@@ -1,8 +1,8 @@
 const {
 	addInvoice,
 	updateInvoice,
-	deleteInvoice
-	//getInvoiceById
+	deleteInvoice,
+	getInvoiceById
 } = require("../services/invoices");
 
 const {
@@ -16,8 +16,13 @@ module.exports = router => {
 		return response.json({ message: "Olá" });
 	});
 
-	router.get("/:id", (request, response) => {
-		return response.json({ message: "Olá" });
+	router.get("/:id", async (request, response) => {
+		const invoiceId = request.params.id;
+		const getInvoiceByIdResponse = await getInvoiceById(invoiceId);
+
+		return response
+			.status(getInvoiceByIdResponse.code)
+			.json(getInvoiceByIdResponse);
 	});
 
 	router.post("/", async (request, response) => {
