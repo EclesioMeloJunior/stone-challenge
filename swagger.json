@@ -1,0 +1,7 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a server build with NodeJS, Express and PostgreSQL, the goal is to setup an API to manipulate Invoices",
+    "version": "1.0.0"
+  }
+}
