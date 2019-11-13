@@ -35,6 +35,7 @@ function invoiceRepository() {
         public."Invoices"
       WHERE
         public."Invoices".id = $1
+      AND public."Invoices"."isActive" <> true
     `;
 
 		const replacements = [invoiceId];
@@ -110,6 +111,7 @@ function invoiceRepository() {
         "deactivatedAt"=$7
       WHERE
         public."Invoices".id = $8
+        AND public."Invoices"."isActive" <> true
     `;
 
 		const replacements = [
