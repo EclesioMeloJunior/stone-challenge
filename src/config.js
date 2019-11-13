@@ -2,8 +2,6 @@ const environment = process.env.NODE_ENV
 	? process.env.NODE_ENV.trim()
 	: "development";
 
-console.log(environment);
-
 if (environment !== "production") {
 	const dotenv = require("dotenv");
 	dotenv.config();

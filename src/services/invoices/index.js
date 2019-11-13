@@ -6,5 +6,6 @@ const buildDeleteInvoice = require("./deleteInvoice");
 const addInvoice = buildAddInvoice(invoiceRepository());
 const updateInvoice = buildUpdateInvoice(invoiceRepository());
 const deleteInvoice = buildDeleteInvoice(invoiceRepository());
+//const getInvoiceById = buildGetInvoiceById(invoiceRepository());
 
 module.exports = { addInvoice, updateInvoice, deleteInvoice };
