@@ -35,7 +35,7 @@ function invoiceRepository() {
         public."Invoices"
       WHERE
         public."Invoices".id = $1
-      AND public."Invoices"."isActive" <> true
+      AND public."Invoices"."isActive" <> false
     `;
 
 		const replacements = [invoiceId];
@@ -62,7 +62,7 @@ function invoiceRepository() {
 			findPayload.itemsPerPage,
 			findPayload.itemsPerPage * findPayload.page,
 			"true",
-			`public."Invoices".id DESC`
+			`public."Invoices".id ASC`
 		];
 
 		if (findPayload.filterBy) {
@@ -111,7 +111,7 @@ function invoiceRepository() {
         "deactivatedAt"=$7
       WHERE
         public."Invoices".id = $8
-        AND public."Invoices"."isActive" <> true
+        AND public."Invoices"."isActive" <> false
     `;
 
 		const replacements = [
