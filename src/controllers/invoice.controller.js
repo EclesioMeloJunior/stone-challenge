@@ -1,23 +1,71 @@
 const {
 	addInvoice,
+	getInvoices,
 	updateInvoice,
-	deleteInvoice
-	//getInvoiceById
+	deleteInvoice,
+	getInvoiceById
 } = require("../services/invoices");
 
 const {
 	invoicePostSchema,
 	invoicePutSchema,
-	invoicePatchSchema
+	invoicePatchSchema,
+	invoiceGetSchema
 } = require("../schemas/invoices");
 
 module.exports = router => {
-	router.get("/", (request, response) => {
-		return response.json({ message: "Olá" });
+	router.get("/", async (request, response) => {
+		const { page, itemsPerPage, sort, filter } = request.query;
+
+		const getInvoicesPayload = {
+			page,
+			itemsPerPage
+		};
+
+		if (sort) {
+			const sortBy = sort.split(",").map(sortRequest => {
+				const [field, orientation] = sortRequest.split(":");
+
+				const defineOrientation = orientation => {
+					if (!orientation) return false;
+					if (orientation === "desc") return true;
+					if (orientation === "asc") return false;
+
+					return null;
+				};
+
+				return { name: field, desc: defineOrientation(orientation) };
+			});
+
+			getInvoicesPayload["sortBy"] = sortBy;
+		}
+
+		if (filter) {
+			const filterBy = filter.split(",").map(filterRequest => {
+				const [field, value] = filterRequest.split(":");
+				return { name: field, value: value || null };
+			});
+
+			getInvoicesPayload["filterBy"] = filterBy;
+		}
+
+		const requestPayload = invoiceGetSchema.validate(getInvoicesPayload);
+
+		if (requestPayload.error) {
+			return response.status(400).json(requestPayload.error);
+		}
+
+		const getInvoicesResponse = await getInvoices(requestPayload.value);
+		return response.status(200).json(getInvoicesResponse);
 	});
 
-	router.get("/:id", (request, response) => {
-		return response.json({ message: "Olá" });
+	router.get("/:id", async (request, response) => {
+		const invoiceId = request.params.id;
+		const getInvoiceByIdResponse = await getInvoiceById(invoiceId);
+
+		return response
+			.status(getInvoiceByIdResponse.code)
+			.json(getInvoiceByIdResponse);
 	});
 
 	router.post("/", async (request, response) => {
