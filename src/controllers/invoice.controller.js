@@ -15,6 +15,8 @@ const {
 
 module.exports = router => {
 	router.get("/", async (request, response) => {
+		console.log(request.user);
+
 		const { page, itemsPerPage, sort, filter } = request.query;
 
 		const getInvoicesPayload = {
