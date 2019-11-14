@@ -14,13 +14,6 @@ function buildDeleteInvoice(invoiceRepository) {
 
 			const invoice = invoiceModel(retrievedInvoice);
 
-			if (!invoice.getIsActive()) {
-				return {
-					code: 404,
-					message: "Invoice not found"
-				};
-			}
-
 			invoice.inativeInvoice();
 
 			const updateResponse = invoiceRepository.update(invoiceId, invoice);

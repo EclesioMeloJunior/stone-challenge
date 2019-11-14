@@ -9,6 +9,7 @@ if (environment !== "production") {
 
 module.exports = {
 	port: process.env.PORT,
+	key: process.env.KEY,
 	database: {
 		user: process.env.DATABASE_USER,
 		host: process.env.DATABASE_HOST,

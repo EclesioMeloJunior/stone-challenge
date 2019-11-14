@@ -44,14 +44,8 @@ describe("Given delete invoice action", () => {
 
 	describe("When delete a deleted invoice", () => {
 		test("should block action and return 404 invoice not found", async () => {
-			const fakerDeletedInvoice = {
-				...fakerNotDeleteInvoice,
-				deactivatedAt: "2019-11-13T12:19:22.852Z",
-				isActive: false
-			};
-
 			const fakerRepository = {
-				findById: jest.fn().mockReturnValueOnce(fakerDeletedInvoice)
+				findById: jest.fn().mockReturnValueOnce(null)
 			};
 
 			const deleteInvoice = buildDeleteInvoice(fakerRepository);

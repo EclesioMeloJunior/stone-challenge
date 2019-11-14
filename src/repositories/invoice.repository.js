@@ -1,4 +1,5 @@
 const database = require("../database");
+const format = require("pg-format");
 
 function invoiceRepository() {
 	const add = async invoice => {
@@ -34,12 +35,66 @@ function invoiceRepository() {
         public."Invoices"
       WHERE
         public."Invoices".id = $1
+      AND public."Invoices"."isActive" <> true
     `;
 
 		const replacements = [invoiceId];
 
 		const invoice = await database.db.query(query, replacements);
 		return invoice.rows.length > 0 ? invoice.rows[0] : null;
+	};
+
+	const find = async findPayload => {
+		const query = /* sql */ `
+      SELECT 
+        public."Invoices".*
+      FROM 
+        public."Invoices"
+      WHERE
+      %s
+      ORDER BY
+      %s
+      LIMIT %L
+      OFFSET %L
+    `;
+
+		const replacements = [
+			findPayload.itemsPerPage,
+			findPayload.itemsPerPage * findPayload.page,
+			"true",
+			`public."Invoices".id ASC`
+		];
+
+		if (findPayload.filterBy) {
+			const whereClausule = findPayload.filterBy.map(find => {
+				return `public."Invoices"."${find.name}"=${find.value}`;
+			});
+
+			replacements[2] = whereClausule.join(" AND ");
+		}
+
+		if (findPayload.sortBy) {
+			const orderByClausule = findPayload.sortBy.map(sort => {
+				return `public."Invoices"."${sort.name}" ${sort.desc ? "DESC" : "ASC"}`;
+			});
+
+			replacements[3] = orderByClausule.join(", ");
+		}
+
+		try {
+			const formatedSQL = format(
+				query,
+				replacements[2],
+				replacements[3],
+				replacements[0],
+				replacements[1]
+			);
+
+			return (await database.db.query(formatedSQL)).rows;
+		} catch (exception) {
+			console.log(exception);
+			return [];
+		}
 	};
 
 	const update = async (invoiceId, invoice) => {
@@ -56,6 +111,7 @@ function invoiceRepository() {
         "deactivatedAt"=$7
       WHERE
         public."Invoices".id = $8
+        AND public."Invoices"."isActive" <> true
     `;
 
 		const replacements = [
@@ -74,7 +130,7 @@ function invoiceRepository() {
 		return updatedInvoice;
 	};
 
-	return Object.freeze({ add, update, findById });
+	return Object.freeze({ add, update, findById, find });
 }
 
 module.exports = invoiceRepository;

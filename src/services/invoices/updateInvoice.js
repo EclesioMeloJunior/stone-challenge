@@ -12,15 +12,6 @@ function buildUpdateInvoice(invoiceRepository) {
 				};
 			}
 
-			const retrivedInvoiceModel = invoiceModel(retrievedInvoice);
-
-			if (!retrivedInvoiceModel.getIsActive()) {
-				return {
-					code: 404,
-					message: "Invoice not found"
-				};
-			}
-
 			const invoice = invoiceModel({ ...retrievedInvoice, ...invoiceDto });
 
 			const updatedInvoice = invoiceRepository.update(invoiceId, invoice);

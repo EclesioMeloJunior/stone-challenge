@@ -3,13 +3,7 @@ const builderUpdateInvoice = require("./updateInvoice");
 describe("When update an invoice", () => {
 	test("When invoice not exists should return 404 (Not Found)", async () => {
 		const fakerRepository = {
-			update: async (id, invoice) => {
-				return {
-					rowCount: 0
-				};
-			},
-
-			findById: async id => null
+			findById: jest.fn().mockReturnValueOnce(null)
 		};
 
 		const updateInvoice = builderUpdateInvoice(fakerRepository);
