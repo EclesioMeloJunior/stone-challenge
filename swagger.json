@@ -12,6 +12,10 @@
   "basePath": "/api/v1",
   "tags": [
     {
+      "name": "Authentication",
+      "description": "Create the authorized token with you name and e-mail"
+    },
+    {
       "name": "Invoice",
       "description": "Invoices HTTP requests"
     }
@@ -26,6 +30,56 @@
     }
   },
   "paths": {
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Generate a authorized JWT to consume the API",
+        "description": "The application will encode your name and e-mail in a 14h expiration JWT",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "name",
+            "decription": "Your identification",
+            "example": "Eclésio Melo Júnior"
+          },
+          {
+            "in": "body",
+            "name": "name",
+            "decription": "Your password",
+            "example": "mysecretpassword"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the created token"
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Retrieve the authenticated user inside the JWT passed through request Authorization header",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the current authenticated user"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
     "/invoices": {
       "get": {
         "tags": [
@@ -64,16 +118,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns an object with property data that is an array of invoices.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Invoice"
-              }
-            }
+            "description": "Returns an object with property data that is an array of invoices."
           },
           "400": {
             "description": "Problems with passed query params, page and itemsPerPage required"
+          },
+          "401": {
+            "description": "Unauthorized user"
           },
           "500": {
             "description": "Internal server error, usually database query execution problems"
@@ -128,29 +179,193 @@
             "description": "The amount of items inside an invoice, must be a number",
             "example": 10
           }
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns the created invoice"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          },
+          "500": {
+            "description": "Internal server error, usually database query execution problems"
+          }
+        }
       }
     },
     "/invoices/{invoiceId}": {
       "get": {
         "tags": [
           "Invoice"
-        ]
+        ],
+        "summary": "Get one invoice by its id",
+        "description": "Search for invoice id and return the first occurrence",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return an invoice object"
+          },
+          "404": {
+            "description": "When an invoice not found will return 404"
+          },
+          "400": {
+            "description": "When the id was not a number will return a Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          },
+          "500": {
+            "description": "Internal server error, usually database query execution problems"
+          }
+        }
       },
       "put": {
         "tags": [
           "Invoice"
-        ]
+        ],
+        "summary": "Update an invoice by its id",
+        "description": "Search for invoice id and update the first occurrence",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "referenceMonth",
+            "required": true,
+            "description": "Will update the reference month",
+            "example": 2
+          },
+          {
+            "in": "body",
+            "name": "referenceYear",
+            "required": true,
+            "description": "Will update the reference year",
+            "example": 2008
+          },
+          {
+            "in": "body",
+            "name": "document",
+            "required": true,
+            "description": "Will update the invoice document name",
+            "example": "Other Doc"
+          },
+          {
+            "in": "body",
+            "name": "amount",
+            "required": false,
+            "description": "Will update the amount of items in a invoice",
+            "example": 1
+          },
+          {
+            "in": "body",
+            "name": "description",
+            "required": false,
+            "description": "Will update the invoice document description",
+            "example": "A good updated description"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated was a success and will return the updated invoice object"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          },
+          "404": {
+            "description": "The invoice was not found"
+          },
+          "500": {
+            "description": "Problems in the query execution"
+          }
+        }
       },
       "patch": {
         "tags": [
           "Invoice"
-        ]
+        ],
+        "summary": "Update an invoice by its id",
+        "description": "Update some fields in invoice data",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "referenceMonth",
+            "required": false,
+            "description": "Will update the reference month",
+            "example": 2
+          },
+          {
+            "in": "body",
+            "name": "referenceYear",
+            "required": false,
+            "description": "Will update the reference year",
+            "example": 2008
+          },
+          {
+            "in": "body",
+            "name": "document",
+            "required": false,
+            "description": "Will update the invoice document name",
+            "example": "Other Doc"
+          },
+          {
+            "in": "body",
+            "name": "amount",
+            "required": false,
+            "description": "Will update the amount of items in a invoice",
+            "example": 1
+          },
+          {
+            "in": "body",
+            "name": "description",
+            "required": false,
+            "description": "Will update the invoice document description",
+            "example": "A good updated description"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated was a success and will return the updated invoice object"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          },
+          "404": {
+            "description": "The invoice was not found"
+          },
+          "500": {
+            "description": "Problems in the query execution"
+          }
+        }
       },
       "delete": {
         "tags": [
           "Invoice"
-        ]
+        ],
+        "summary": "Delete logically an invoice",
+        "description": "Search invoice by id then inactivate and set the deactivatedAt to now",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the excluded invoice object"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          },
+          "404": {
+            "description": "The invoice was not found"
+          },
+          "500": {
+            "description": "Problems with query execution"
+          }
+        }
       }
     }
   },

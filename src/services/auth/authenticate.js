@@ -1,12 +1,11 @@
 function buildAuthenticate({ key, jwtGenerator }) {
-	return async function authenticate({ name, email, password } = {}) {
+	return async function authenticate({ name, email } = {}) {
 		return {
 			code: 200,
 			token: jwtGenerator(
 				{
 					name,
-					email,
-					password
+					email
 				},
 				key,
 				{ expiresIn: "14h" }
