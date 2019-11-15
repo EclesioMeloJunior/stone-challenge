@@ -8,6 +8,7 @@ class Database {
 	async connect(config) {
 		if (this.db === null) {
 			let client = null;
+
 			if (config.database.connectionString) {
 				client = new Client({
 					connectionString: config.database.connectionString
