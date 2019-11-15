@@ -6,8 +6,6 @@ function buildAuthMiddleware({ key, jwtChecker }) {
 	return function authMiddleware(request, response, next) {
 		const bearerToken = searchForToken(request);
 
-		console.log(bearerToken);
-
 		if (!bearerToken) {
 			return response.status(401).send({ message: "Unauthorized" });
 		}
