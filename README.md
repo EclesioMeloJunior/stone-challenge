@@ -11,10 +11,9 @@ A aplicação está disponível em: https://app-stone-challenge.herokuapp.com/
 
   - NodeJS, Express
   - PostgreSQL v11
+  - Jest, Swagger
 
 - ## Para executar a aplicação
-
----
 
 - ### Máquina Local
 
@@ -72,8 +71,6 @@ npm run start:dev
 
 A aplicação estará disponível na porta 5004 e será redirecionado para a documentação da API com Swagger
 
----
-
 - ### Utilizando Docker
 
 1. Clone o repositório para sua máquina local e entre na pasta do projeto
@@ -90,3 +87,23 @@ docker-compose -f ./docker-compose.yml up --build
 ```
 
 3. A aplicação irá ser executada neste endereço: http://localhost:8080
+
+---
+
+- ## Testes
+
+Os testes da aplicação foram construídos utilizando a ferramenta Jest
+
+Para rodar os testes na aplicação basta executar os comandos
+
+1. Para testes de integração:
+
+```
+npm run test:integration
+```
+
+2. Para testes unitários:
+
+```
+npm run test
+```
