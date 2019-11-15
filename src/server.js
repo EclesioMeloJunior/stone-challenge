@@ -12,6 +12,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
+
+app.get("/", (request, response) => {
+	return response.redirect("/api-docs");
+});
+
 app.use("/api", router(express.Router()));
 
 module.exports = app;
