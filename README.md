@@ -33,12 +33,6 @@ A aplicação está disponível em: https://app-stone-challenge.herokuapp.com/
   docker-compose -f ./docker-compose-db.yml up -d
   ```
 
-  para parar utilize:
-
-  ```
-  docker-compose -f ./docker-compose-db.yml down -d
-  ```
-
   4. Crie o arquivo de configuração **.env** na raiz da pasta e dentro dele coloque:
 
   ```
@@ -72,6 +66,6 @@ A aplicação está disponível em: https://app-stone-challenge.herokuapp.com/
   npm run start:dev
   ```
 
-  A aplicação estará disponível na porta 5004
+  A aplicação estará disponível na porta 5004 e será redirecionado para a documentação da API com Swagger
 
 * Utilizando Docker
