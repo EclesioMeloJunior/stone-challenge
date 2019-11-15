@@ -12,75 +12,81 @@ A aplicação está disponível em: https://app-stone-challenge.herokuapp.com/
   - NodeJS, Express
   - PostgreSQL v11
 
-- Para executar a aplicação
+- ## Para executar a aplicação
 
-  - Máquina Local
+---
 
-  1. Clone o repositório para sua máquina local e entre na pasta do projeto
+- ### Máquina Local
 
-  ```
-  git clone https://github.com/EclesioMeloJunior/stone-challenge.git
-  cd ./stone-challenge
-  ```
+1. Clone o repositório para sua máquina local e entre na pasta do projeto
 
-  2. Instale as dependências do NPM:
+```
+git clone https://github.com/EclesioMeloJunior/stone-challenge.git
+cd ./stone-challenge
+```
 
-  ```
-  npm install
-  ```
+2. Instale as dependências do NPM:
 
-  3. (Opcional) Execute o banco usando docker (**docker-compose**)
+```
+npm install
+```
 
-  ```
-  docker-compose -f ./docker-compose-db.yml up -d
-  ```
+3. (Opcional) Execute o banco usando docker (**docker-compose**)
 
-  4. Crie o arquivo de configuração **.env** na raiz da pasta e dentro dele coloque:
+```
+docker-compose -f ./docker-compose-db.yml up -d
+```
 
-  ```
-  PORT=5004
-  NODE_ENV=development
+4. Crie o arquivo de configuração **.env** na raiz da pasta e dentro dele coloque:
 
-  DATABASE_PORT=5434
-  DATABASE_USER=postgres
-  DATABASE_HOST=localhost
-  DATABASE_NAME=postgres
-  DATABASE_PASSWORD=pass
+```
+PORT=5004
+NODE_ENV=development
 
-  KEY=$T0n3Ch@ll3ng3
-  ```
+DATABASE_PORT=5434
+DATABASE_USER=postgres
+DATABASE_HOST=localhost
+DATABASE_NAME=postgres
+DATABASE_PASSWORD=pass
 
-  5. Com o banco criado e as configurações de conexão criados, podemos executar a migração da tabela de Invoice
+KEY=$T0n3Ch@ll3ng3
+```
 
-  ```
-  npm run migrate
-  ```
+5. Com o banco criado e as configurações de conexão criados, podemos executar a migração da tabela de Invoice
 
-  6. Após feito a migração a aplicação pode ser executada:
+```
+npm run migrate
+```
 
-  ```
-  npm start
-  ```
+6. Após feito a migração a aplicação pode ser executada:
 
-  ou com nodemon
+```
+npm start
+```
 
-  ```
-  npm run start:dev
-  ```
+ou com nodemon
 
-  A aplicação estará disponível na porta 5004 e será redirecionado para a documentação da API com Swagger
+```
+npm run start:dev
+```
 
-  - Utilizando Docker
+A aplicação estará disponível na porta 5004 e será redirecionado para a documentação da API com Swagger
 
-  1. Clone o repositório para sua máquina local e entre na pasta do projeto
+---
 
-  ```
-  git clone https://github.com/EclesioMeloJunior/stone-challenge.git
-  cd ./stone-challenge
-  ```
+- ### Utilizando Docker
 
-  2. Execute o comando:
+1. Clone o repositório para sua máquina local e entre na pasta do projeto
 
-  ```
-  docker-compose -f ./docker-compose.yml up --build
-  ```
+```
+git clone https://github.com/EclesioMeloJunior/stone-challenge.git
+cd ./stone-challenge
+```
+
+2. Execute o comando:
+
+```
+docker-compose -f ./docker-compose.yml up --build
+```
+
+3. A aplicação irá ser executada neste endereço: http://localhost:8080
