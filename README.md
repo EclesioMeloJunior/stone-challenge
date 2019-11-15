@@ -1,5 +1,7 @@
 # stone-chagellenge
 
+[![Build Status](https://travis-ci.org/EclesioMeloJunior/stone-challenge.svg?branch=master)](https://travis-ci.org/EclesioMeloJunior/stone-challenge)
+
 Este app foi elaborado para o desafio técnico da empresa [Stone](https://www.stone.com.br/)
 https://www.stone.com.br/ que consiste em um gerenciado de notas fiscaís
 
