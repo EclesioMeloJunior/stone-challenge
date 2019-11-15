@@ -21,7 +21,7 @@ services:
       - stonet
     environment:
       - PORT=8080
-      - DATABASE_PORT=5433
+      - DATABASE_PORT=5432
       - DATABASE_USER=postgres
       - DATABASE_HOST=postgresdb
       - DATABASE_NAME=postgres
