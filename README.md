@@ -70,4 +70,17 @@ A aplicação está disponível em: https://app-stone-challenge.herokuapp.com/
 
   A aplicação estará disponível na porta 5004 e será redirecionado para a documentação da API com Swagger
 
-* Utilizando Docker
+  - Utilizando Docker
+
+  1. Clone o repositório para sua máquina local e entre na pasta do projeto
+
+  ```
+  git clone https://github.com/EclesioMeloJunior/stone-challenge.git
+  cd ./stone-challenge
+  ```
+
+  2. Execute o comando:
+
+  ```
+  docker-compose -f ./docker-compose.yml up --build
+  ```
