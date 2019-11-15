@@ -26,7 +26,6 @@ services:
       - DATABASE_HOST=postgresdb
       - DATABASE_NAME=postgres
       - DATABASE_PASSWORD=root
-      - DATABASE_STRING=postgres://postgres:root@postgresdb:5432/postgres
 
 networks:
   stonet:
